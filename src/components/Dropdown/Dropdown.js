@@ -40,7 +40,7 @@ class Dropdown extends Component {
         defaultOption: event.target.innerHTML
       }, () => {
         document.removeEventListener('click', this.closeMenu);
-        this.props.change(event.target.innerHTML==="NON-VEG FLOOR"?"nonveg":"veg")
+        this.props.change(event.target.innerHTML==="EL SINALOENSE"?"nonveg":"veg")
       }) 
     }
   }
