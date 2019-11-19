@@ -14,9 +14,9 @@ const intro = (props) => {
 
     return (
         <div className="intro-container">
-            <span>CHOOSE THE DATE YOU WANT TO BOOK FOR</span>
+            <span>¿PARA CUÁNDO QUIERES RESERVAR?</span>
             <div className="options-container">
-                <button onClick={() => {props.setDate(dates[0])}}>TOMORROW</button>
+                <button onClick={() => {props.setDate(dates[0])}}>MAÑANA</button>
                 <button onClick={() => {props.setDate(dates[1])}}>{dates[1]}</button>
                 <button onClick={() => {props.setDate(dates[2])}}>{dates[2]}</button>
                 <button onClick={() => {props.setDate(dates[3])}}>{dates[3]}</button>
