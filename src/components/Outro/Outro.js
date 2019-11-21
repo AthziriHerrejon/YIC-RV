@@ -19,7 +19,7 @@ const outro = (props) => {
                     <span>PISO:</span>
                     &nbsp;
                     <span style={{ color: props.floor==="veg"?"#76CC89":"rgb(232, 111, 104)" }}>
-                        {props.floor==="veg"?"VEG":"NON-VEG"}
+                        {props.floor==="veg"?"ÁREA DE FUMADORES":"ÁREA DE NO FUMADORES"}
                     </span>
                 </p>
                 <p><span>HORA:</span>&nbsp;<span  style={{ color: "rgb(127, 142, 156)" }}>{props.time}</span></p>

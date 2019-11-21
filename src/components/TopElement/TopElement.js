@@ -8,7 +8,7 @@ const topElement = (props) => {
     let defaultOption = null;
 
     if( props.floor === "veg" )
-        defaultOption = "VEG FLOOR";
+        defaultOption = "Escoge un área";
     else if( props.floor === "nonveg" )
         defaultOption = "NON-VEG FLOOR";
     else{}

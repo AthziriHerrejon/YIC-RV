@@ -2,9 +2,10 @@
   "name": "restro",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://Contrevien.github.io/table-reservation",
+  "homepage": "/build",
   "dependencies": {
     "firebase": "^5.5.7",
+    "firebase-tools": "^7.8.1",
     "lodash": "^4.17.11",
     "mime": "^2.3.1",
     "react": "^16.6.0",

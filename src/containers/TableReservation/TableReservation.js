@@ -26,39 +26,39 @@ class TableReservation extends React.Component {
 
     state = {
         floor: "veg",
-        floorOptions: ["VEG FLOOR", "NON-VEG FLOOR"],
+        floorOptions: ["Área de fumar", "Área de no fumar"],
         ham: false,
         veg: [
             ['N/A', 'N/A', 'N/A', 'N/A', 'N/A'],
-            ['RAJ', '~1M', 'TB1', 'AVAIL', '2'],
-            ['RAJ', '~2M', 'TB2', 'AVAIL', '2'],
-            ['RAMAN', '~1M', 'TB3', 'AVAIL', '4'],
-            ['RAMAN', '~2M', 'TB4', 'AVAIL', '4'],
-            ['ZIEK', '~3M', 'TB5', 'AVAIL', '4'],
-            ['ZIEK', '~5M', 'TB6', 'AVAIL', '6'],
-            ['CLAM', '~5M', 'TB7', 'AVAIL', '8'],
+            ['RAJ', '~1M', 'TB1', 'DISPONIBLE', '2'],
+            ['RAJ', '~2M', 'TB2', 'DISPONIBLE', '2'],
+            ['RAMAN', '~1M', 'TB3', 'DISPONIBLE', '4'],
+            ['RAMAN', '~2M', 'TB4', 'DISPONIBLE', '4'],
+            ['ZIEK', '~3M', 'TB5', 'DISPONIBLE', '4'],
+            ['ZIEK', '~5M', 'TB6', 'DISPONIBLE', '6'],
+            ['CLAM', '~5M', 'TB7', 'DISPONIBLE', '8'],
         ],
         nonveg: [
             ['N/A', 'N/A', 'N/A', 'N/A', 'N/A'],
-            ['MD', '~1M', 'TB1', 'AVAIL', '2'],
-            ['MD', '~2M', 'TB2', 'AVAIL', '2'],
-            ['SRI', '~1M', 'TB3', 'AVAIL', '4'],
-            ['SRI', '~2M', 'TB4', 'AVAIL', '4'],
-            ['SRI', '~3M', 'TB5', 'AVAIL', '4'],
-            ['LEE', '~5M', 'TB6', 'AVAIL', '6'],
-            ['ATIF', '~5M', 'TB7', 'AVAIL', '8'],
+            ['MD', '~1M', 'TB1', 'DISPONIBLE', '2'],
+            ['MD', '~2M', 'TB2', 'DISPONIBLE', '2'],
+            ['SRI', '~1M', 'TB3', 'DISPONIBLE', '4'],
+            ['SRI', '~2M', 'TB4', 'DISPONIBLE', '4'],
+            ['SRI', '~3M', 'TB5', 'DISPONIBLE', '4'],
+            ['LEE', '~5M', 'TB6', 'DISPONIBLE', '6'],
+            ['ATIF', '~5M', 'TB7', 'DISPONIBLE', '8'],
         ],
         name: "Nombre de la reservación",
         nameOK: false,
         bookDate: null,
         booked: false,
         currentReservations: null,
-        available: 0,
+        DISPONIBLEable: 0,
         time: "Hora de llegada",
         seats: "Número de asientos",
         seatsOK: false,
         timeOK: false,
-        buttonContent: "BOOK",
+        buttonContent: "Reservación",
         buttonBGColor: "#eee",
         buttonColor: "rgb(127, 142, 156)",
         opacity: 0
@@ -84,7 +84,7 @@ class TableReservation extends React.Component {
     saveData = () => {
         let dbCon = firebase.database().ref('bookings').child(this.state.bookDate);
         dbCon.push({
-            table: this.state[this.state.floor][this.state.available][2],
+            table: this.state[this.state.floor][this.state.DISPONIBLEable][2],
             time: this.state.time,
             floor: this.state.floor,
             name: this.state.name
@@ -115,7 +115,7 @@ class TableReservation extends React.Component {
             {
                 for (let i=1; i<8; i++){
                     if(tempFloor[i][2]===temp[k]["table"])
-                        tempFloor[i][3] = "AVAIL"
+                        tempFloor[i][3] = "DISPONIBLE"
                 }
             }
         }
@@ -123,7 +123,7 @@ class TableReservation extends React.Component {
             [this.state.floor]: tempFloor
         })
         if(this.state.seatsOK)
-            this.availablityHandler(this.state.seats)
+            this.DISPONIBLEablityHandler(this.state.seats)
     }
 
     timeFirst = () => {
@@ -135,21 +135,21 @@ class TableReservation extends React.Component {
         })
     }
 
-    availablityHandler = (seats) => {
+    DISPONIBLEablityHandler = (seats) => {
         let flag = 0;
         for (let i=1; i<8; i++){
-            if (this.state[this.state.floor][i][4] === seats && this.state[this.state.floor][i][3] === "AVAIL"){
+            if (this.state[this.state.floor][i][4] === seats && this.state[this.state.floor][i][3] === "DISPONIBLE"){
                 this.setState({
-                    available: i
+                    DISPONIBLEable: i
                 });
                 flag = 1;
                 break;
             }
         }
         if(flag===0){
-            alert("No tables with these Number of Seats are available at this time:\n1. Try changing number of Seats\n2. Try changing time of the day\n3. Reload if you want to change date");
+            alert("No hay mesas con este número de asientos disponibles por ahora:\n1. Trata de cambiar el número de asientos \n2. Trata de cambiar la hora\n3. Carga de nuevo la página si quieres cambiar la hora");
             this.setState({
-                available: 0
+                DISPONIBLEable: 0
             })
         }
     }
@@ -165,13 +165,13 @@ class TableReservation extends React.Component {
     seatsHandler = (e) => {
         let seats = e.target.value;
         let patt = /\d/;
-        if (patt.test(seats) && ["2", "4", "6", "8"].includes(seats)) {
-            this.availablityHandler(seats)
+        if (patt.test(seats) && ["2", "3", "4", "5", "6", "7", "8"].includes(seats)) {
+            this.DISPONIBLEablityHandler(seats)
             this.setState({
                 seats: seats,
                 seatsOK: true,
-                buttonContent: "BOOK",
-                buttonBGColor: "#eee",
+                buttonContent: "RESERVAR",
+                buttonBGColor: "btn-btn-danger",
                 buttonColor: "rgb(127, 142, 156)",
                 opacity: 0
             })
@@ -179,7 +179,7 @@ class TableReservation extends React.Component {
         else {
             this.setState({
                 seats: seats,
-                buttonContent: "CHOOSE FROM 2/4/6/8",
+                buttonContent: "El máximo por mesa es de 8 personas",
                 buttonBGColor: "rgb(232, 111, 104)",
                 buttonColor: "#fff",
                 opacity: 1
@@ -196,7 +196,7 @@ class TableReservation extends React.Component {
             if (parseInt(time.slice(0,2), 10) < 9 || parseInt(time.slice(0,2), 10) >= 23)
                 this.setState({
                     time: time,
-                    buttonContent: "OPEN TIME 9:00 T0 23:00",
+                    buttonContent: "Abrimos de las 9:00 a las 23:00",
                     buttonBGColor: "rgb(232, 111, 104)",
                     buttonColor: "#fff",
                     opacity: 1
@@ -204,7 +204,7 @@ class TableReservation extends React.Component {
             else if (parseInt(time.slice(0,2), 10) === 21 && parseInt(time.slice(3,5), 10) > 0)
             this.setState({
                 time: time,
-                buttonContent: "LAST BOOKING TILL 21:00",
+                buttonContent: "La última reservación es a las 9:00",
                 buttonBGColor: "rgb(232, 111, 104)",
                 buttonColor: "#fff",
                 opacity: 1
@@ -213,7 +213,7 @@ class TableReservation extends React.Component {
                 this.setState({
                     time: time,
                     timeOK: true,
-                    buttonContent: "BOOK",
+                    buttonContent: "RESERVAR",
                     buttonBGColor: "#eee",
                     buttonColor: "rgb(127, 142, 156)",
                     opacity: 0
@@ -224,7 +224,7 @@ class TableReservation extends React.Component {
         else {
             this.setState({
                 time: time,
-                buttonContent: "ENTER AS HH:MM",
+                buttonContent: "FORMATO HORA:MINUTOS",
                 buttonBGColor: "rgb(232, 111, 104)",
                 buttonColor: "#fff",
                 opacity: 1
@@ -235,9 +235,9 @@ class TableReservation extends React.Component {
     floorHandler = (floor) => {
         this.setState({
             floor: floor,
-            seats: "ENTER SEATS",
-            time: "ENTER TIME",
-            available: 0,
+            seats: "Número de asientos",
+            time: "Hora",
+            DISPONIBLEable: 0,
             seatsOK: false,
             timeOK: false
         })
@@ -273,7 +273,7 @@ class TableReservation extends React.Component {
             view = 
                 <div className="container">
                     <Outro name={this.state.name}
-                            table={this.state[this.state.floor][this.state.available][2]}
+                            table={this.state[this.state.floor][this.state.DISPONIBLEable][2]}
                             time={this.state.time}
                             floor={this.state.floor}
                             seats={this.state.seats}/>
@@ -285,15 +285,15 @@ class TableReservation extends React.Component {
                     <TopElement floor={this.state.floor} floorOptions={this.state.floorOptions} change={this.floorHandler}
                                 ham={this.state.ham} sideDrawer={this.toggleSideDrawer} />
                     <MiddleElement seats={this.state.seats} seatsChanged={this.seatsHandler}
-                                    defaultSeatsText="ENTER SEATS"
+                                    defaultSeatsText="Ingresa el número de asientos"
                                     time={this.state.time} timeChanged={this.timeHandler}
-                                    defaultTimeText="ENTER TIME" floor={this.state.floor}
+                                    defaultTimeText="Ingresa la hora" floor={this.state.floor}
                                     buttonContent={this.state.buttonContent} buttonBGColor={this.state.buttonBGColor}
                                     buttonColor={this.state.buttonColor} opacity={this.state.opacity} nameOK={this.state.nameOK}
                                     seatsOK={this.state.seatsOK} timeOK={this.state.timeOK} timeFirst={this.timeFirst}
-                                    name={this.state.name} nameChanged={this.nameHandler} defaultName="ENTER NAME"
+                                    name={this.state.name} nameChanged={this.nameHandler} defaultName="Ingresa tu nombre"
                                     book={this.saveData}/>
-                    <BottomElement details={this.state[this.state.floor][this.state.available]} floor={this.state.floor} />
+                    <BottomElement details={this.state[this.state.floor][this.state.DISPONIBLEable]} floor={this.state.floor} />
                 </div>
             
         }

@@ -2,7 +2,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background-image:linear-gradient(gray,black);
+    background-image:linear-gradient(whitesmoke , gray);
     display: flex;
     align-items: center;
     justify-content: center;

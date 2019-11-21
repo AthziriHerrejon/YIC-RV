@@ -6,7 +6,7 @@ const hoverer = (props) => {
         <div className="hoverer">
             <div onClick={() => {
                 // eslint-disable-next-line
-                (props.default==="ENTER SEATS"&&!props.OK)?props.timeFirst():null
+                (props.default==="Ingresa número de asientos"&&!props.OK)?props.timeFirst():null
             }}>
                 <input type="text" id="ip" style={{
                     backgroundColor: props.line,
